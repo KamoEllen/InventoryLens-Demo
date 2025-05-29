@@ -16,10 +16,26 @@ load_dotenv()
 
 app = FastAPI(title="InventoryLens AI", version="1.0.0")
 
-# CORS middleware for React frontend
+# CORS middleware - Updated for production deployment
+allowed_origins = [
+    "http://localhost:5173",  # Local React dev
+    "http://localhost:3000",  # Local React dev
+    "https://inventorylens-demo.onrender.com",  # Your Render backend
+]
+
+# Add Netlify domain when you know it
+netlify_domain = os.getenv("NETLIFY_DOMAIN", "")
+if netlify_domain:
+    allowed_origins.append(f"https://{netlify_domain}")
+    allowed_origins.append(f"https://{netlify_domain}.netlify.app")
+
+# For development, you can also allow all origins (not recommended for production)
+if os.getenv("ENVIRONMENT") == "development":
+    allowed_origins = ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],  # React dev servers
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -149,11 +165,28 @@ def categorize_classification_labels(predictions: List[Dict]) -> Dict[str, float
 
 @app.get("/")
 async def root():
-    return {"message": "InventoryLens AI Backend is running!", "status": "healthy"}
+    """Root endpoint with deployment info"""
+    return {
+        "message": "InventoryLens AI Backend is running!", 
+        "status": "healthy",
+        "version": "1.0.0",
+        "deployed_on": "render.com",
+        "endpoints": {
+            "health": "/health",
+            "object_detection": "/detect",
+            "image_classification": "/classify",
+            "full_analysis": "/analyze"
+        }
+    }
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "services": ["object_detection", "image_classification"]}
+    """Health check endpoint for monitoring"""
+    return {
+        "status": "healthy", 
+        "services": ["object_detection", "image_classification"],
+        "huggingface_token": "configured" if HF_API_TOKEN else "not_configured"
+    }
 
 @app.post("/detect")
 async def detect_objects(file: UploadFile = File(...)):
@@ -505,6 +538,14 @@ async def full_analysis(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Analysis error: {str(e)}")
 
+# Health check endpoint for Render deployment
+@app.get("/ping")
+async def ping():
+    """Simple ping endpoint for health checks"""
+    return {"status": "pong"}
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # Use PORT environment variable for Render deployment
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
