@@ -21,13 +21,15 @@ allowed_origins = [
     "http://localhost:5173",  # Local React dev
     "http://localhost:3000",  # Local React dev
     "https://inventorylens-demo.onrender.com",  # Your Render backend
+    "https://inventoryanalysis-ai.netlify.app",  # Your Netlify frontend
 ]
 
-# Add Netlify domain when you know it
-netlify_domain = os.getenv("NETLIFY_DOMAIN", "")
+# Add additional Netlify domain patterns
+netlify_domain = os.getenv("NETLIFY_DOMAIN", "inventoryanalysis-ai")
 if netlify_domain:
-    allowed_origins.append(f"https://{netlify_domain}")
     allowed_origins.append(f"https://{netlify_domain}.netlify.app")
+    # Also add deploy previews pattern
+    allowed_origins.append(f"https://deploy-preview-*--{netlify_domain}.netlify.app")
 
 # For development, you can also allow all origins (not recommended for production)
 if os.getenv("ENVIRONMENT") == "development":
