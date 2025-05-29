@@ -1,7 +1,10 @@
 import React, { useState, useRef } from 'react';
 import './App.css';
 
-const API_BASE_URL = 'http://localhost:8000'; // Your FastAPI backend
+// Updated API configuration for production deployment
+const API_BASE_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://inventorylens-demo.onrender.com'  // Your Render backend URL
+  : 'http://localhost:8000'; // Local development
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -74,6 +77,8 @@ function App() {
       const formData = new FormData();
       formData.append('file', selectedFile);
 
+      console.log('Making request to:', `${API_BASE_URL}/detect`);
+      
       const response = await fetch(`${API_BASE_URL}/detect`, {
         method: 'POST',
         body: formData,
@@ -87,7 +92,7 @@ function App() {
         setError(data.detail || 'Detection failed');
       }
     } catch (err) {
-      setError('Network error. Make sure the backend is running on port 8000');
+      setError(`Network error: ${err.message}. Check if backend is running at ${API_BASE_URL}`);
       console.error('Detection error:', err);
     } finally {
       setIsDetecting(false);
@@ -106,6 +111,8 @@ function App() {
     try {
       const formData = new FormData();
       formData.append('file', selectedFile);
+
+      console.log('Making request to:', `${API_BASE_URL}/classify`);
 
       const response = await fetch(`${API_BASE_URL}/classify`, {
         method: 'POST',
@@ -129,7 +136,7 @@ function App() {
         setError(data.detail || 'Classification failed');
       }
     } catch (err) {
-      setError('Network error. Make sure the backend is running on port 8000');
+      setError(`Network error: ${err.message}. Check if backend is running at ${API_BASE_URL}`);
       console.error('Classification error:', err);
     } finally {
       setIsClassifying(false);
@@ -148,6 +155,8 @@ function App() {
     try {
       const formData = new FormData();
       formData.append('file', selectedFile);
+
+      console.log('Making request to:', `${API_BASE_URL}/analyze`);
 
       const response = await fetch(`${API_BASE_URL}/analyze`, {
         method: 'POST',
@@ -178,7 +187,7 @@ function App() {
         setError(data.detail || 'Analysis failed');
       }
     } catch (err) {
-      setError('Network error. Make sure the backend is running on port 8000');
+      setError(`Network error: ${err.message}. Check if backend is running at ${API_BASE_URL}`);
       console.error('Analysis error:', err);
     } finally {
       setIsAnalyzing(false);
@@ -236,6 +245,19 @@ function App() {
           <p className="text-lg text-gray-600">
             AI-powered inventory analysis with object detection and image classification
           </p>
+          {/* Backend Status Indicator */}
+          <div className="mt-2">
+            <span className="text-sm text-gray-500">
+              Backend: {API_BASE_URL} 
+              <span className={`ml-2 px-2 py-1 rounded text-xs ${
+                process.env.NODE_ENV === 'production' 
+                  ? 'bg-green-100 text-green-800' 
+                  : 'bg-yellow-100 text-yellow-800'
+              }`}>
+                {process.env.NODE_ENV === 'production' ? 'Production' : 'Development'}
+              </span>
+            </span>
+          </div>
         </div>
 
         {/* Error Display */}
