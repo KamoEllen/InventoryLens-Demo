@@ -1,4 +1,4 @@
-# InventoryLens AI 🔍
+# InventoryLens AI 
 
 **AI-Powered Object Detection for Inventory Analysis**
 
@@ -419,7 +419,7 @@ export LOG_LEVEL=DEBUG
 python start_backend.py
 ```
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create a feature branch: 
@@ -452,7 +452,7 @@ For issues and questions:
 
 ---
 
-**InventoryLens AI** - Transforming inventory management through computer vision 🚀
+**InventoryLens AI** - Transforming inventory management through computer vision 🤝
 
 <!--git clone https://github.com/KamoEllen/InventoryLens-Demo.git
 cd InventoryLens-Demo                                     echo backend/.env >> .gitignore
