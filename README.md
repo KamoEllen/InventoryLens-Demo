@@ -1,3 +1,6 @@
+render-https://inventorylens-demo.onrender.com
+netlify - https://inventoryanalysis-ai.netlify.app/
+
 # InventoryLens AI 
 
 **AI-Powered Object Detection for Inventory Analysis**
