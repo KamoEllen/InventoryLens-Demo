@@ -1,5 +1,5 @@
-render-https://inventorylens-demo.onrender.com
-netlify - https://inventoryanalysis-ai.netlify.app/
+<!--render-https://inventorylens-demo.onrender.com
+netlify - https://inventoryanalysis-ai.netlify.app/ -->
 
 # InventoryLens AI 
 
