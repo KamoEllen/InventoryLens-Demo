@@ -85,23 +85,11 @@ inventorylens/
 ##  Architecture Diagrams
 
 ### Frontend Flow
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1a365d'}}}%%
-flowchart TD
-    A[App] --> B[ImageUpload]
-    A --> C[ResultsDisplay]
-    B --> D[useState]
-    C --> E[ObjectTable]
-```
+![front](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/1.png)
 
 ### Backend Flow
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1a365d'}}}%%
-flowchart LR
-    A[FastAPI] --> B[/detect]
-    B --> C[HuggingFace API]
-    C --> D[Result Parser]
-```
+![back](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/2.png)
+`
 
 ##  What's Accurate in Your Original:
 - Core feature descriptions
