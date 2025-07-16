@@ -4,7 +4,7 @@ netlify - https://inventoryanalysis-ai.netlify.app/ -->
 
 ### **1. Frontend Component Architecture**  
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1a365d', 'edgeLabelBackground':'#f7fafc', 'tertiaryColor': '#c05621'}}}%%
+{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1a365d', 'edgeLabelBackground':'#f7fafc', 'tertiaryColor': '#c05621'}}}%%
 flowchart TD
     A[App.js] --> B[ImageUpload]
     A --> C[ResultsDisplay]
@@ -23,7 +23,7 @@ flowchart TD
 
 ### **2. Backend Service Architecture**  
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1a365d', 'edgeLabelBackground':'#f7fafc', 'tertiaryColor': '#c05621'}}}%%
+{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1a365d', 'edgeLabelBackground':'#f7fafc', 'tertiaryColor': '#c05621'}}}%%
 flowchart LR
     A[FastAPI\nServer] --> B[Auth Middleware]
     A --> C[CORS Config]
