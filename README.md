@@ -83,6 +83,8 @@ inventorylens/
 ```
 
 ##  Architecture Diagrams
+![img](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/lens.png)
+
 
 ### Frontend Flow
 ![front](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/2.png)
