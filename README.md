@@ -1,6 +1,44 @@
 <!--render-https://inventorylens-demo.onrender.com
 netlify - https://inventoryanalysis-ai.netlify.app/ -->
 
+
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1a365d', 'edgeLabelBackground':'#f7fafc', 'tertiaryColor': '#c05621'}}}%%
+flowchart LR
+    A[FastAPI\nServer] --> B[Auth Middleware]
+    A --> C[CORS Config]
+    A --> D[/detect\nPOST]
+    A --> E[/analyze\nPOST]
+    D --> F[Image Preprocessor]
+    E --> F
+    F --> G[HuggingFace\nDETR API]
+    G --> H[Result Parser]
+    H --> I[JSON Response]
+    style A fill:#2c5282,stroke:#1a365d,color:#fff
+    style B,C fill:#4a5568,stroke:#2d3748
+    style D,E fill:#4299e1,stroke:#2b6cb0
+    style F,G fill:#ecc94b,stroke:#d69e2e
+    style H,I fill:#ed8936,stroke:#dd6b20
+
+
+
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1a365d', 'edgeLabelBackground':'#f7fafc', 'tertiaryColor': '#c05621'}}}%%
+flowchart TD
+    A[App.js] --> B[ImageUpload]
+    A --> C[ResultsDisplay]
+    A --> D[HistoryPanel]
+    A --> E[ExportButton]
+    B --> F[useState\n(file, preview)]
+    B --> G[useRef\n(drag/drop)]
+    C --> H[ObjectCountTable]
+    C --> I[DetectionVisualization]
+    D --> J[LocalStorage\n(history)]
+    style A fill:#2c5282,stroke:#1a365d,color:#fff
+    style B,C,D,E fill:#4299e1,stroke:#2b6cb0
+    style F,G fill:#ecc94b,stroke:#d69e2e
+    style H,I,J fill:#ed8936,stroke:#dd6b20
+
+
+    
 # InventoryLens AI 
 
 **AI-Powered Object Detection for Inventory Analysis**
