@@ -1,9 +1,20 @@
 <!--render-https://inventorylens-demo.onrender.com
 netlify - https://inventoryanalysis-ai.netlify.app/ -->
     
-# InventoryLens AI 
-
 # InventoryLens: AI-Powered Inventory Analysis
+
+## Table of Contents
+- [Key Features](#key-features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Setup](#setup)
+  - [Backend](#backend)
+  - [Frontend](#frontend)
+- [API Endpoints](#api-endpoints)
+- [Architecture Diagrams](#architecture-diagrams)
+  - [Frontend Flow](#frontend-flow)
+  - [Backend Flow](#backend-flow)
+- [Improvements](#improvements)
 
 ![Demo](demo.gif) 
 <!--
@@ -16,7 +27,7 @@ netlify - https://inventoryanalysis-ai.netlify.app/ -->
 - **Export Reports**: Generate TXT reports with object counts/positions
 - **Analysis History**: Track past scans with timestamps
 
-## 🛠 Tech Stack
+##  Tech Stack
 | Component       | Technologies                          |
 |-----------------|---------------------------------------|
 | **Frontend**    | React 18, Tailwind CSS                |
@@ -105,6 +116,8 @@ flowchart LR
 4. **Better Formatting**: Consistent headers and table layouts
 5. **Removed Placeholders**: Replaced generic "demo.gif" note
 
+<!--
+
 ##  Suggested Additions:
 1. **Error Handling Section**:
    ```markdown
@@ -121,5 +134,6 @@ flowchart LR
    RUN pip install -r requirements.txt
    CMD ["python", "start_backend.py"]
    ```
+   -->
 
 
