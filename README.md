@@ -85,10 +85,11 @@ inventorylens/
 ##  Architecture Diagrams
 
 ### Frontend Flow
-![front](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/1.png)
+![front](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/2.png)
 
 ### Backend Flow
-![back](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/2.png)
+![back](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/1.png)
+
 `
 
 ##  What's Accurate in Your Original:
