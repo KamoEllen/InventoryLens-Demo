@@ -1,75 +1,159 @@
 <!--render-https://inventorylens-demo.onrender.com
 netlify - https://inventoryanalysis-ai.netlify.app/ -->
-    
-# InventoryLens: AI-Powered Inventory Analysis
-
 ## Table of Contents
-- [Key Features](#key-features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Setup](#setup)
-  - [Backend](#backend)
-  - [Frontend](#frontend)
-- [API Endpoints](#api-endpoints)
-- [Architecture Diagrams](#architecture-diagrams)
-  - [Frontend Flow](#frontend-flow)
-  - [Backend Flow](#backend-flow)
-- [Improvements](#improvements)
 
-![Demo](demo.gif) 
-<!--
-**Live Demos:**  
-[Backend on Render](https://inventorylens-demo.onrender.com) | [Frontend on Netlify](https://inventoryanalysis-ai.netlify.app)
--->
-##  Key Features
-- **AI Object Detection**: Uses HuggingFace's DETR ResNet-50 model
-- **Drag & Drop UI**: Upload images or select from samples
-- **Export Reports**: Generate TXT reports with object counts/positions
-- **Analysis History**: Track past scans with timestamps
+1. [Key Features](#key-features)
+2. [Tech Stack](#tech-stack)
+3. [Architecture](#architecture)
 
-##  Tech Stack
-| Component       | Technologies                          |
-|-----------------|---------------------------------------|
-| **Frontend**    | React 18, Tailwind CSS                |
-| **Backend**     | FastAPI, Python 3.8+                 |
-| **AI**          | HuggingFace Inference API             |
-| **Deployment**  | Render (Backend), Netlify (Frontend)  |
+   * [Frontend Flow](#frontend-flow)
+   * [Backend Flow](#backend-flow)
+4. [Project Structure](#project-structure)
+5. [Setup](#setup)
 
-##  Project Structure
+   * [Backend](#backend)
+   * [Frontend](#frontend)
+6. [API Endpoints](#api-endpoints)
+7. [Improvements](#improvements)
+
+---
+
+## Key Features
+
+* **AI Object Detection:** Uses HuggingFace DETR ResNet-50
+* **Drag & Drop UI:** Upload images or select from sample images
+* **Export Reports:** Generate TXT reports with object counts and positions
+* **Analysis History:** Track past scans with timestamps and cached results
+
+---
+
+## Tech Stack
+
+| Layer         | Technology                                |
+| ------------- | ----------------------------------------- |
+| Frontend      | React 18, Tailwind CSS                    |
+| Backend       | FastAPI, Python 3.8+                      |
+| AI Processing | HuggingFace Inference API, DETR ResNet-50 |
+| Deployment    | Render (Backend), Netlify (Frontend)      |
+
+---
+
+## Architecture
+
+### High-Level Overview
+
+![InventoryLens Architecture](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/lens.png)
+
+* **Frontend:** React 18 + Tailwind CSS handles upload, preview, analysis, and report generation
+* **Backend:** FastAPI receives uploads, calls HuggingFace API, processes results, and returns structured JSON
+* **AI Integration:** DETR ResNet-50 detects objects in images
+* **Deployment:** Frontend on Netlify, Backend on Render, AI via HuggingFace API
+
+---
+
+### Frontend Flow
+
+![Frontend Flow](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/2.png)
+
+**React Architecture (Frontend 18+)**
+
+* **Upload Zone & Drag & Drop Interface**
+
+  * Click or drag files to upload
+  * Format validation and live preview
+
+* **Sample Gallery:** Quick access to four test images
+
+* **Results Panel:**
+
+  * Object counts, category breakdown
+  * Confidence metrics & visual charts
+
+* **Analysis Controls:**
+
+  * Analysis button triggers API call
+  * History tracker shows last 10 analyses with timestamps
+  * Export manager generates TXT/CSV reports
+
+* **State Management:** Loading states, error handling, API orchestration, user feedback
+
+---
+
+### Backend Flow
+
+![Backend Flow](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/1.png)
+
+**FastAPI Services**
+
+* **API Routes**
+
+  * `GET /health` – Health check
+  * `POST /detect` – Object detection
+  * `POST /analyze` – Full analysis with metadata
+
+* **Image Processor**
+
+  * PIL-based resizing & format conversion
+  * Base64 encoding for AI processing
+
+* **AI Integration**
+
+  * HuggingFace API client with token authentication
+  * Rate limiting & error handling
+
+* **Error & Response Management**
+
+  * CORS handler for dev/prod origins
+  * Consistent JSON schema, formatted object counts
+  * HTTP error recovery and logging
+
+---
+
+## Project Structure
+
 ```
 inventorylens/
 ├── frontend/          # React app
 │   ├── src/App.js     # Main component
-│   └── public/        # Static assets
+│   └── public/       # Static assets
 ├── backend/           # FastAPI server
-│   ├── main.py        # Core logic
+│   ├── main.py        # API & core logic
 │   └── requirements.txt
 └── README.md
 ```
 
-##  Setup
-1. **Backend**:
-   ```bash
-   cd backend
-   pip install -r requirements.txt
-   echo "HUGGINGFACE_API_KEY=your_key" > .env
-   python start_backend.py
-   ```
+---
 
-2. **Frontend**:
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
-   ```
+## Setup
 
-##  API Endpoints
-| Endpoint | Method | Description                |
-|----------|--------|----------------------------|
-| `/detect`| POST   | Object detection           |
-| `/analyze`| POST  | Full analysis with metadata|
+### Backend
 
-**Example Response**:
+```bash
+cd backend
+pip install -r requirements.txt
+echo "HUGGINGFACE_API_KEY=your_key" > .env
+python start_backend.py
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+## API Endpoints
+
+| Endpoint   | Method | Description                   |
+| ---------- | ------ | ----------------------------- |
+| `/detect`  | POST   | Single image object detection |
+| `/analyze` | POST   | Full analysis with metadata   |
+
+**Sample Response:**
+
 ```json
 {
   "success": true,
@@ -82,49 +166,12 @@ inventorylens/
 }
 ```
 
-##  Architecture Diagrams
-![img](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/lens.png)
+---
 
+## Improvements
 
-### Frontend Flow
-![front](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/2.png)
-
-### Backend Flow
-![back](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/1.png)
-
-`
-
-##  What's Accurate in Your Original:
-- Core feature descriptions
-- Tech stack listing
-- API response format
-- Setup instructions
-
-##  Improvements Made:
-1. **Fixed Mermaid Syntax**: Added missing `%%` in diagram declarations
-2. **Removed Redundancies**: Consolidated duplicate architecture sections
-3. **Simplified Setup**: Streamlined installation steps
-4. **Better Formatting**: Consistent headers and table layouts
-5. **Removed Placeholders**: Replaced generic "demo.gif" note
-
-<!--
-
-##  Suggested Additions:
-1. **Error Handling Section**:
-   ```markdown
-   ##  Common Issues
-   - CORS Errors: Verify `allowed_origins` in `main.py`
-   - Rate Limiting: Add HuggingFace API key
-   ```
-
-2. **Docker Support** (if applicable):
-   ```dockerfile
-   # backend/Dockerfile
-   FROM python:3.9
-   COPY requirements.txt .
-   RUN pip install -r requirements.txt
-   CMD ["python", "start_backend.py"]
-   ```
-   -->
-
-
+1. **Streamlined Architecture:** Unified Frontend/Backend flows with diagrams
+2. **Enhanced UX:** Drag & Drop, live preview, sample gallery
+3. **Error Management:** Centralized backend handling with CORS, rate limiting, logging
+4. **Export Options:** TXT/CSV report generation
+5. **History Tracking:** Cached results with timestamps
