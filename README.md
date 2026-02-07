@@ -42,7 +42,7 @@ netlify - https://inventoryanalysis-ai.netlify.app/ -->
 
 ### High-Level Overview
 
-![InventoryLens Architecture](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/lens.png)
+![InventoryLens Architecture](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/diagram.png)
 
 * **Frontend:** React 18 + Tailwind CSS handles upload, preview, analysis, and report generation
 * **Backend:** FastAPI receives uploads, calls HuggingFace API, processes results, and returns structured JSON
