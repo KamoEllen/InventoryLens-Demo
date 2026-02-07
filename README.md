@@ -44,7 +44,7 @@ netlify - https://inventoryanalysis-ai.netlify.app/ -->
 
 ### High-Level Visual
 
-![InventoryLens Architecture Diagram](https://github.com/KamoEllen/InventoryLens-Demo/blob/main/diagram.png)
+![InventoryLens Architecture Diagram](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/diagram.png)
 
 
 * **Frontend:** React 18 + Tailwind CSS handles upload, preview, analysis, and report generation
