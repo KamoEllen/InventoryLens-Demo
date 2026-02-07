@@ -1,13 +1,11 @@
 <!--render-https://inventorylens-demo.onrender.com
 netlify - https://inventoryanalysis-ai.netlify.app/ -->
+
 ## Table of Contents
 
 1. [Key Features](#key-features)
 2. [Tech Stack](#tech-stack)
 3. [Architecture](#architecture)
-
-   * [Frontend Flow](#frontend-flow)
-   * [Backend Flow](#backend-flow)
 4. [Project Structure](#project-structure)
 5. [Setup](#setup)
 
@@ -20,10 +18,10 @@ netlify - https://inventoryanalysis-ai.netlify.app/ -->
 
 ## Key Features
 
-* **AI Object Detection:** Uses HuggingFace DETR ResNet-50
-* **Drag & Drop UI:** Upload images or select from sample images
-* **Export Reports:** Generate TXT reports with object counts and positions
-* **Analysis History:** Track past scans with timestamps and cached results
+* **AI Object Detection** using HuggingFace DETR ResNet-50
+* **Drag & Drop UI** with sample image gallery
+* **Exportable Reports** (TXT) with object counts and metadata
+* **Analysis History** with timestamps and cached results
 
 ---
 
@@ -40,75 +38,59 @@ netlify - https://inventoryanalysis-ai.netlify.app/ -->
 
 ## Architecture
 
-### High-Level Overview
-
-### High-Level Visual
+### High-Level System Architecture
 
 ![InventoryLens Architecture Diagram](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/diagram-img.png)
 
+**System Overview**
 
-* **Frontend:** React 18 + Tailwind CSS handles upload, preview, analysis, and report generation
-* **Backend:** FastAPI receives uploads, calls HuggingFace API, processes results, and returns structured JSON
-* **AI Integration:** DETR ResNet-50 detects objects in images
-* **Deployment:** Frontend on Netlify, Backend on Render, AI via HuggingFace API
+* **Frontend (React 18)**
+  Handles image upload, previews, triggering analysis, result display, and report export.
 
----
+* **Backend (FastAPI)**
+  Receives image uploads, validates input, orchestrates AI inference, parses results, and returns structured JSON.
 
-### Frontend Flow
+* **AI Processing (HuggingFace API)**
+  DETR ResNet-50 model performs object detection and returns bounding boxes, labels, and confidence scores.
 
-![Frontend Flow](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/2.png)
-
-**React Architecture (Frontend 18+)**
-
-* **Upload Zone & Drag & Drop Interface**
-
-  * Click or drag files to upload
-  * Format validation and live preview
-
-* **Sample Gallery:** Quick access to four test images
-
-* **Results Panel:**
-
-  * Object counts, category breakdown
-  * Confidence metrics & visual charts
-
-* **Analysis Controls:**
-
-  * Analysis button triggers API call
-  * History tracker shows last 10 analyses with timestamps
-  * Export manager generates TXT/CSV reports
-
-* **State Management:** Loading states, error handling, API orchestration, user feedback
+* **Deployment**
+  Frontend deployed on Netlify, Backend on Render, AI inference via HuggingFace API.
 
 ---
 
-### Backend Flow
+### Frontend Flow (Textual)
 
-![Backend Flow](https://github.com/KamoEllen/InventoryLens-Demo/blob/master/readme-images/1.png)
+1. User uploads an image via drag-and-drop or selects a sample image
+2. Client performs format validation and preview rendering
+3. User triggers analysis
+4. Frontend sends image to backend (`/detect` or `/analyze`)
+5. Results are rendered:
 
-**FastAPI Services**
+   * Object counts
+   * Confidence metrics
+   * Category breakdown
+6. User can:
 
-* **API Routes**
+   * Export TXT report
+   * Review previous analyses (history)
 
-  * `GET /health` – Health check
-  * `POST /detect` – Object detection
-  * `POST /analyze` – Full analysis with metadata
+---
 
-* **Image Processor**
+### Backend Flow (Textual)
 
-  * PIL-based resizing & format conversion
-  * Base64 encoding for AI processing
+1. FastAPI receives image upload request
+2. Image processing pipeline:
 
-* **AI Integration**
+   * Format normalization (PIL)
+   * Resize & encode (Base64)
+3. Request forwarded to HuggingFace Inference API
+4. AI returns detection results
+5. Backend:
 
-  * HuggingFace API client with token authentication
-  * Rate limiting & error handling
-
-* **Error & Response Management**
-
-  * CORS handler for dev/prod origins
-  * Consistent JSON schema, formatted object counts
-  * HTTP error recovery and logging
+   * Parses response
+   * Normalizes output schema
+   * Handles errors & rate limits
+6. Structured JSON response returned to frontend
 
 ---
 
@@ -116,11 +98,11 @@ netlify - https://inventoryanalysis-ai.netlify.app/ -->
 
 ```
 inventorylens/
-├── frontend/          # React app
-│   ├── src/App.js     # Main component
-│   └── public/       # Static assets
-├── backend/           # FastAPI server
-│   ├── main.py        # API & core logic
+├── frontend/          # React application
+│   ├── src/App.js     # Main UI logic
+│   └── public/        # Static assets
+├── backend/           # FastAPI backend
+│   ├── main.py        # API routes & orchestration
 │   └── requirements.txt
 └── README.md
 ```
@@ -150,31 +132,24 @@ npm run dev
 
 ## API Endpoints
 
-| Endpoint   | Method | Description                   |
-| ---------- | ------ | ----------------------------- |
-| `/detect`  | POST   | Single image object detection |
-| `/analyze` | POST   | Full analysis with metadata   |
+| Endpoint   | Method | Description                 |
+| ---------- | ------ | --------------------------- |
+| `/detect`  | POST   | Object detection            |
+| `/analyze` | POST   | Full analysis with metadata |
 
-**Sample Response:**
+**Sample Response**
 
 ```json
 {
   "success": true,
-  "object_counts": {"bottle": 3},
-  "detections": [{
-    "label": "bottle",
-    "confidence": 0.92,
-    "box": {"xmin": 100, "ymin": 50}
-  }]
+  "object_counts": { "bottle": 3 },
+  "detections": [
+    {
+      "label": "bottle",
+      "confidence": 0.92,
+      "box": { "xmin": 100, "ymin": 50 }
+    }
+  ]
 }
 ```
 
----
-
-## Improvements
-
-1. **Streamlined Architecture:** Unified Frontend/Backend flows with diagrams
-2. **Enhanced UX:** Drag & Drop, live preview, sample gallery
-3. **Error Management:** Centralized backend handling with CORS, rate limiting, logging
-4. **Export Options:** TXT/CSV report generation
-5. **History Tracking:** Cached results with timestamps
